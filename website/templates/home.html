@@ -1,7 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<h1>Hello World!</h1>
-
+<div class="col-md-6">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% if user.is_authenticated %}
+    <h1>You are already LoggedIn!</h1>
+    {% else %}
+    <h1>Login</h1>
+    <br>
+    <form action="{%  url 'home' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group mb-2">
+          <input type="text" class="form-control" placeholder="Enter email" name="username">
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" name="password">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      {% endif %}
+</div>
 {% endblock %}
